@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">面试进程</view>
+  </view>
+  <view class="page__bd">
+    <view class="weui-panel weui-panel_access" wx:for="{{stages}}">
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_appmsg progress-box">
+          <view class="progress-left-box">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="margin-right: 0;">
+              <image class="weui-media-box__thumb" src="../../images/{{item.id}}.png" style="{{item.done?'':'filter:grayscale(1);'}}"></image>
+            </view>
+            <text>{{item.title}}</text>
+          </view>
+          <view>-----------------→</view>
+          <view class='text'>{{item.desc}}</view>
+        </view>
+      </view>
+      <view class="div-musk" hidden="{{item.done}}"></view>
+    </view>
+  </view>
+</view>

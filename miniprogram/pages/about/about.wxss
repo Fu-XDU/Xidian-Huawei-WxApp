@@ -1,0 +1,27 @@
+.progress-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #aaa;
+    background-color: #f2f2f2;
+}
+
+.progress-left-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-musk {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: #aaa;
+    filter: Alpha(Opacity=60);
+    opacity: 0.6;
+    z-index: 999;
+}
+.text{
+  color:#52ca34;
+}

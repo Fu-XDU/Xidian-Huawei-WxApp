@@ -1,0 +1,160 @@
+<view>
+  <view class="weui-cells__title">Tips</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <text class="weui-textarea" maxlength="300" placeholder="" style="height: 3.8em">你已成功报名，请耐心等待短信通知\n下面是你所提交的报名信息\n如需修改请在招新群699218815联系管理员</text>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="form-row">
+      <view class="weui-cell weui-cell_input form-col-item form-col-item-left">
+        <view class="weui-cell__hd">
+          <view class="form-col-item-label">姓名:{{name}}</view>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input form-col-item">
+        <view class="weui-cell__hd">
+          <view class="form-col-item-label">性别:{{sex}}</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input disabled class="weui-input" placeholder=""></input>
+        </view>
+      </view>
+    </view>
+    <view class="form-row">
+      <view class="weui-cell weui-cell_input form-col-item form-col-item-left">
+        <view class="weui-cell__hd">
+          <view class="form-col-item-label">学院:{{college}}</view>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input form-col-item">
+        <view class="weui-cell__hd">
+          <view class="form-col-item-label">专业:{{major}}</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" data-area="major" placeholder=""></input>
+        </view>
+      </view>
+    </view>
+    <view class="form-row">
+      <view class="weui-cell weui-cell_input form-col-item form-col-item-left">
+        <view class="weui-cell__hd" bindtap='showphone'>
+          <view class="form-col-item-label">电话:{{phone}}</view>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input form-col-item">
+        <view class="weui-cell__hd" bindtap='showstuid'>
+          <view class="form-col-item-label">学号:{{stuid}}</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindinput="bindFormInput" class="weui-input" data-area="stuid" placeholder="" type="number"></input>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">感兴趣方向:{{direction}}</view>
+      </view>
+      <view class="weui-cell__bd">
+        <view class="weui-input"></view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__bd">
+        <view class="weui-select picker-text">
+          <text>{{'个人特长: '}}</text> {{specialty}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title" hidden='{{detail_specialty_flag?false:true}}'>
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">填写个人特长:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input bindinput="bindFormInput" class="weui-input" data-area="detail_specialty" placeholder=""></input>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__bd">
+        <view class="weui-select picker-text">
+          <text>{{'意向部门: '}}</text> {{department}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__bd">
+        <view class="weui-select picker-text">
+          <text>{{'是否接受调剂: '}}</text> {{adjust}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">个人简介</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <text class="weui-textarea" maxlength="300" placeholder="" style="height: 22em">{{profile}}</text>
+        <view class="weui-textarea-counter">{{profile.length}}/300</view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">荣誉奖励</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <text class="weui-textarea" data-area="reward" maxlength="300" placeholder="" style="height: 22em">{{reward}}</text>
+        <view class="weui-textarea-counter">{{reward.length}}/300</view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">实践经历</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <text class="weui-textarea" data-area="experience" maxlength="300" placeholder="" style="height: 22em">{{experience}}</text>
+        <view class="weui-textarea-counter">{{experience.length}}/300</view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">兴趣爱好</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <text class="weui-textarea" data-area="interest" maxlength="300" placeholder="" style="height: 22em">{{interest}}</text>
+        <view class="weui-textarea-counter">{{interest.length}}/300</view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">加入俱乐部的目的</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <text class="weui-textarea" data-area="purpose" maxlength="300" placeholder="" style="height: 22em">{{purpose}}</text>
+        <view class="weui-textarea-counter">{{purpose.length}}/300</view>
+      </view>
+    </view>
+    <view class="weui-cells__title"></view>
+  </view>
+</view>
+<view class="weui-cells__title">照片</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <text>{{imgtext}}</text>
+      <image src="{{imgUrl}}" mode="aspectFit" bindtap='preview'></image>
+    </view>
+  </view>
+  <view class="weui-cells__title"></view>
+</view>

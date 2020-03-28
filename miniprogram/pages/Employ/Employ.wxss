@@ -1,0 +1,23 @@
+.form-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-col-item {
+    flex: 1;
+    border-bottom: solid 1px #aaa;
+}
+
+.form-col-item-left {
+    border-right: solid 1px #aaa;
+}
+
+.form-col-item-label {
+    margin-right: 35rpx;
+}
+
+.picker-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

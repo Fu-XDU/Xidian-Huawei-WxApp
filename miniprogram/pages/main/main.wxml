@@ -1,0 +1,26 @@
+<!--pages/main/main.wxml-->
+<image src="../../images/icon.jpg" />
+<view class="title-box">
+  <text>— 所有模块 —</text>
+</view>
+<view class="section">
+  <view class="flex-wrp" style="flex-direction:row;">
+    <navigator class="flex-item func-box" hoverClass="navigator-hover" url="../Employ/Employ">
+      <image class="func-ico" mode="widthFix" src="../../images/employ.png" bindtap='apply'></image>
+      <text>招新报名</text>
+    </navigator>
+    <navigator class="flex-item func-box" hoverClass="navigator-hover" url="../Resume/Resume">
+      <image class="func-ico" mode="widthFix" src="../../images/resume.png" bindtap='resume'></image>
+      <text>华俱介绍</text>
+    </navigator>
+    <navigator class="flex-item func-box" hoverClass="navigator-hover" url="../EmployDetail/EmployDetail">
+      <image class="func-ico" bindtap="detail" mode="widthFix" src="../../images/booking.png"></image>
+      <text>查看报名</text>
+    </navigator>
+  </view>
+</view>
+<view class="section" hidden='true'>
+  <view class="flex-wrp" style="flex-direction:row;">
+    
+  </view>
+</view>

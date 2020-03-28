@@ -1,0 +1,186 @@
+<van-notice-bar
+    text="{{noticeText}}"
+    left-icon="//img.yzcdn.cn/public_files/2017/8/10/6af5b7168eed548100d9041f07b7c616.png"
+/>
+<view class="weui-cells weui-cells_after-title">
+  <view class="form-row">
+    <view class="weui-cell weui-cell_input form-col-item form-col-item-left">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">姓名:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input bindinput="bindFormInput" class="weui-input" data-area="name" placeholder=""></input>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_input form-col-item">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">性别:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindPickerChange" data-area="sex" range="{{pickerList.sex}}" value="0">
+          <input disabled class="weui-input" placeholder="" value="{{sex}}"></input>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <view class="form-row">
+    <view class="weui-cell weui-cell_input form-col-item form-col-item-left">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">学院:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindPickerChange" data-area="college" range="{{pickerList.college}}" value="0">
+          <input disabled class="weui-input" placeholder="" value="{{college}}"></input>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_input form-col-item">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">专业:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input bindinput="bindFormInput" class="weui-input" data-area="major" placeholder=""></input>
+      </view>
+    </view>
+  </view>
+  <view class="form-row">
+    <view class="weui-cell weui-cell_input form-col-item form-col-item-left">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">电话:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input bindinput="bindFormInput" class="weui-input" data-area="phone" placeholder="" type="number"></input>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_input form-col-item">
+      <view class="weui-cell__hd">
+        <view class="form-col-item-label">学号:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input bindinput="bindFormInput" class="weui-input" data-area="stuid" placeholder="" type="number"></input>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="form-col-item-label" bindtap='getImg'>照片:{{photo}}</view>
+    </view>
+    <view class="weui-cell__bd">
+      <view class="weui-input" bindtap='getImg'></view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="form-col-item-label">感兴趣方向:</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input bindinput="bindFormInput" class="weui-input" data-area="direction" placeholder=""></input>
+    </view>
+  </view>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_select">
+    <view class="weui-cell__bd">
+      <picker bindchange="bindPickerChange" data-area="specialty" range="{{pickerList.specialty}}" value="0">
+        <view class="weui-select picker-text">
+          <text>{{'个人特长: '}}</text> {{specialty}}
+        </view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class="weui-cells weui-cells_after-title" hidden='{{detail_specialty_flag?false:true}}'>
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="form-col-item-label">填写个人特长:</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input bindinput="bindFormInput" class="weui-input" data-area="detail_specialty" placeholder=""></input>
+    </view>
+  </view>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_select">
+    <view class="weui-cell__bd">
+      <picker bindchange="bindPickerChange" data-area="department" range="{{pickerList.department}}" value="0">
+        <view class="weui-select picker-text">
+          <text>{{'意向部门: '}}</text> {{department}}
+        </view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_select">
+    <view class="weui-cell__bd">
+      <picker bindchange="bindPickerChange" data-area="adjust" range="{{pickerList.adjust}}" value="0">
+        <view class="weui-select picker-text">
+          <text>{{'是否接受调剂: '}}</text> {{adjust}}
+        </view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class="weui-cells__title">个人简介</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea bindinput="bindFormInput" class="weui-textarea" data-area="profile" maxlength="300" placeholder="请输入文本" style="height: 3.3em"></textarea>
+      <view class="weui-textarea-counter">{{profile.length}}/300</view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells__title">荣誉奖励</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea bindinput="bindFormInput" class="weui-textarea" data-area="reward" maxlength="300" placeholder="请输入文本" style="height: 3.3em"></textarea>
+      <view class="weui-textarea-counter">{{reward.length}}/300</view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells__title">实践经历</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea bindinput="bindFormInput" class="weui-textarea" data-area="experience" maxlength="300" placeholder="请输入文本" style="height: 3.3em"></textarea>
+      <view class="weui-textarea-counter">{{experience.length}}/300</view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells__title">兴趣爱好</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea bindinput="bindFormInput" class="weui-textarea" data-area="interest" maxlength="300" placeholder="请输入文本" style="height: 3.3em"></textarea>
+      <view class="weui-textarea-counter">{{interest.length}}/300</view>
+    </view>
+  </view>
+</view>
+<view class="weui-cells__title">加入俱乐部的目的</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea bindinput="bindFormInput" class="weui-textarea" data-area="purpose" maxlength="300" placeholder="请输入文本" style="height: 3.3em"></textarea>
+      <view class="weui-textarea-counter">{{purpose.length}}/300</view>
+    </view>
+  </view>
+</view>
+<checkbox-group bindchange="bindAgreeChange">
+  <label class="weui-agree" for="weuiAgree">
+    <view class="weui-agree__text">备注：</view>
+    <view class="weui-agree__text">1.微信公众号“西电华了个为”由研究生部运营，本科生获取信息请关注俱乐部QQ公众号“西电华小为”:1050971397.</view>
+    <!--<view class="weui-agree__text">2.加入2019华为创新俱乐部招新群：699218815，及时获取更多招新相关通知.</view>-->
+    <view class="weui-agree__text">2.目前为线上预报名,面试时间地点确定后会以短信形式通知.</view>
+    <view class="weui-agree__text">3.外场时间请关注公众号通知,希望大家可以积极参与,我们期待你的加入.</view>
+    <!--<view class="weui-agree__text">4.本次招新只招收2019级本科新生.</view>-->
+  </label>
+</checkbox-group>
+<view class="weui-btn-area">
+  <button bindtap="checkFormDouble" class="weui-btn" type="primary" hidden='{{!showButton}}'>确认报名</button>
+  <button bindtap="ToCheck" class="weui-btn" type="primary" hidden='{{showButton}}'>查看我的报名</button>
+</view>

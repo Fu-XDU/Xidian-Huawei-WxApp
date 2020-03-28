@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/index/index",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/about/about",
+    "pages/database/database",
+    "pages/Employ/Employ",
+    "pages/Resume/Resume",
+    "pages/Booking/Booking",
+    "pages/Check/Check",
+    "pages/Success/Success",
+    "pages/EmployDetail/EmployDetail",
+    "pages/list/list",
+    "pages/temp/temp"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "西电华为创新俱乐部",
+    "backgroundColor": "#F6F6F6"
+  },
+  "tabBar": {
+    "position": "bottom",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "主页",
+        "iconPath": "/images/Main_Unslected.png",
+        "selectedIconPath": "/images/Main_Slected.png"
+      },
+      {
+        "pagePath": "pages/about/about",
+        "text": "其它",
+        "iconPath": "/images/About_Unslected.png",
+        "selectedIconPath": "/images/About_Slected.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}
