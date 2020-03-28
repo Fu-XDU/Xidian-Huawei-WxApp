@@ -29,8 +29,12 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 4,
+			"current": -1,
 			"list": [
 				{
 					"id": -1,
@@ -43,13 +47,6 @@
 					"id": -1,
 					"name": "pages/Employ/Employ",
 					"pathName": "pages/Employ/Employ",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/temp/temp",
-					"pathName": "pages/temp/temp",
 					"query": "",
 					"scene": null
 				},
