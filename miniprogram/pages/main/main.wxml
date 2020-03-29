@@ -13,9 +13,9 @@
       <image class="func-ico" mode="widthFix" src="../../images/resume.png" bindtap='resume'></image>
       <text>华俱介绍</text>
     </navigator>
-    <navigator class="flex-item func-box" hoverClass="navigator-hover" url="../EmployDetail/EmployDetail">
-      <image class="func-ico" bindtap="detail" mode="widthFix" src="../../images/booking.png"></image>
-      <text>查看报名</text>
+    <navigator class="flex-item func-box" hoverClass="navigator-hover">
+      <image class="func-ico" bindtap="developingOrDetail" mode="widthFix" src="../../images/booking.png"></image>
+      <text>{{third_icon_name}}</text>
     </navigator>
   </view>
 </view>

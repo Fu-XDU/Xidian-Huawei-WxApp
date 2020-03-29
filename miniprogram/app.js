@@ -17,6 +17,7 @@ App({
     openid: "",
     adid: "",
     infos: [],
-    userInfo: null
+    userInfo: null,
+    admin:false
   }
 })

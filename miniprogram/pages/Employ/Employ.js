@@ -26,6 +26,7 @@ Page({
     interest: "",
     purpose: "",
     detail_specialty_flag: false,
+    disable_upload_photo:false,
     pickerList: {
       sex: ["男", "女"],
       college: ["通信工程学院", "电子工程学院", "计算机学院", "机电工程学院", "物理与光电工程学院", "经济与管理学院", "数学与统计学院", "外国语学院", "软件学院", "微电子学院", "生命科学技术学院", "空间科学与技术学院", "先进材料与纳米科技学院", "网络与信息安全学院", "人工智能学院"],
@@ -41,6 +42,7 @@ Page({
   },
   getImg: function() {
     var that = this;
+    if (that.data.disable_upload_photo) return;
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
@@ -60,7 +62,7 @@ Page({
             // get resource ID
             console.log('照片上传成功', res.fileID)
             that.setData({
-              photo: '照片上传成功！'
+              photo: '照片上传成功，重复上传可覆盖。'
             })
           },
           fail: err => {
@@ -251,7 +253,7 @@ Page({
             icon: 'none',
             title: '本次只招收2019级本科新生'
           })
-        } else if (photo != '照片上传成功！') {
+        } else if (photo != '照片上传成功，重复上传可覆盖。') {
           if (photo == '未选择，点击选择照片') {
             wx.showToast({
               icon: 'none',
@@ -387,7 +389,9 @@ Page({
             if (res.data.length != 0) {
               console.log("信息查询成功，找到报名信息", res.data[0])
               that.setData({
-                showButton: false
+                showButton: false,//不显示提交按钮
+                photo: '已报名，照片已上传',
+                disable_upload_photo:true //禁止照片上传
               })
             } else {
               console.log("信息查询成功,未找到报名信息")
