@@ -1,2 +1,0 @@
-<button bindtap="getImg">上传图片</button><image class="image_frame" src="{{imgSrc}}" mode="aspectFill">  
-</image> 

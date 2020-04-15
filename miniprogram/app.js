@@ -7,7 +7,7 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        env:"huawei-213p7"
+        env: "huawei-213p7"
       })
     }
   },
@@ -18,6 +18,6 @@ App({
     adid: "",
     infos: [],
     userInfo: null,
-    admin:false
+    admin: false
   }
 })

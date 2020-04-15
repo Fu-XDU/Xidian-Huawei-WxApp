@@ -1,24 +1,12 @@
 {
   "pages": [
     "pages/main/main",
-    "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi",
     "pages/about/about",
-    "pages/database/database",
     "pages/Employ/Employ",
     "pages/Resume/Resume",
-    "pages/Booking/Booking",
     "pages/Check/Check",
     "pages/Success/Success",
-    "pages/EmployDetail/EmployDetail",
-    "pages/list/list",
-    "pages/temp/temp"
+    "pages/EmployDetail/EmployDetail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F6F6F6",

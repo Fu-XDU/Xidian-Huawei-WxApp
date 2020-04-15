@@ -26,7 +26,7 @@ Page({
     interest: "",
     purpose: "",
     detail_specialty_flag: false,
-    disable_upload_photo:false,
+    disable_upload_photo: false,
     pickerList: {
       sex: ["男", "女"],
       college: ["通信工程学院", "电子工程学院", "计算机学院", "机电工程学院", "物理与光电工程学院", "经济与管理学院", "数学与统计学院", "外国语学院", "软件学院", "微电子学院", "生命科学技术学院", "空间科学与技术学院", "先进材料与纳米科技学院", "网络与信息安全学院", "人工智能学院"],
@@ -38,7 +38,7 @@ Page({
     noticeText: '正在获取数据...', //最上方公告栏文本
     photo: '未选择，点击选择照片',
     imgSrc: '',
-    imgType:''
+    imgType: ''
   },
   getImg: function() {
     var that = this;
@@ -201,7 +201,7 @@ Page({
       purpose = this.data.purpose,
       detail_specialty_flag = this.data.detail_specialty_flag,
       photo = this.data.photo,
-      imgType=this.data.imgType
+      imgType = this.data.imgType
     wx.cloud.callFunction({
       name: "checkall",
       data: {
@@ -259,8 +259,7 @@ Page({
               icon: 'none',
               title: '请选择并上传照片'
             })
-          }
-          else if (photo == '照片选择成功,正在上传...') {
+          } else if (photo == '照片选择成功,正在上传...') {
             wx.showToast({
               icon: 'none',
               title: '正在上传照片，请等待上传完成后提交'
@@ -300,7 +299,7 @@ Page({
                         experience: experience,
                         interest: interest,
                         purpose: purpose,
-                        imgType:imgType
+                        imgType: imgType
                       },
                       success: res => {
                         wx.redirectTo({
@@ -389,9 +388,9 @@ Page({
             if (res.data.length != 0) {
               console.log("信息查询成功，找到报名信息", res.data[0])
               that.setData({
-                showButton: false,//不显示提交按钮
+                showButton: false, //不显示提交按钮
                 photo: '已报名，照片已上传',
-                disable_upload_photo:true //禁止照片上传
+                disable_upload_photo: true //禁止照片上传
               })
             } else {
               console.log("信息查询成功,未找到报名信息")

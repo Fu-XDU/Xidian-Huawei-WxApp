@@ -34,7 +34,7 @@ Page({
    */
   //0不亮尚未进行 1亮正在进行 2亮进行完毕
   onLoad: function(options) {
-    
+
   },
 
   /**
@@ -58,12 +58,12 @@ Page({
       stages: [{
         id: 1,
         title: "01 网上申请",
-        done: !0,//亮
+        done: !0, //亮
         desc: "尚未进行"
       }, {
         id: 2,
         title: "02 综合面试",
-        done: !1,//不亮
+        done: !1, //不亮
         desc: "尚未进行"
       }, {
         id: 3,
@@ -88,8 +88,8 @@ Page({
             })
             break;
           case '2':
-            c[0].done = !0//apply
-            c[1].done = !0//interview
+            c[0].done = !0 //apply
+            c[1].done = !0 //interview
             c[0].desc = "进行完毕"
             t.setData({
               stages: c

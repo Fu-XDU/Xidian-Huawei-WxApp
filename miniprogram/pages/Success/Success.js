@@ -1,5 +1,5 @@
 Page({
-  ToMain: function () {
+  ToMain: function() {
     wx.switchTab({
       url: '../main/main'
     })
