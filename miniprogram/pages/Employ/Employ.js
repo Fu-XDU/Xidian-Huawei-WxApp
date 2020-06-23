@@ -183,14 +183,13 @@ Page({
    */
   checkFormDouble: function() {
     var _this = this;
-    var name = real_specialty = ''
+    var real_specialty = ''
     wx.cloud.callFunction({
       name: "checkall",
       data: {
         collectionName: 'About'
       },
       success(res) {
-        console.log('网上申请:', res.result.data[0].apply)
         if (res.result.data[0].apply == -1) {
           wx.showToast({
             icon: 'none',
