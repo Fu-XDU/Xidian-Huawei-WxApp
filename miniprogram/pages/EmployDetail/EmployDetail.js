@@ -1,12 +1,11 @@
 var app = getApp();
+const util = require("../../utils/util.js")
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     resultList: [],
-    collectionName: 'Recruit',
     list: [],
     femaleicon: "../../images/female.png",
     maleicon: "../../images/male.png",
@@ -43,9 +42,9 @@ Page({
     wx.cloud.callFunction({
       name: "checkall",
       data: {
-        collectionName: this.data.collectionName
+        collectionName: 'Recruit'
       },
-      complete: res => {
+      success: res => {
         console.log("[数据库Recruit]信息获取成功");
         try {
           if (!res.result.data)
@@ -75,6 +74,9 @@ Page({
             resultLenth: '一共报名0人,女生0人'
           })
         }
+      },
+      fail: err => {
+        util.networkError(err);
       }
     })
   },

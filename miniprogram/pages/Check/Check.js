@@ -1,4 +1,5 @@
 var app = getApp();
+const util = require("../../utils/util.js")
 // miniprogram/pages/Check/Check.js
 Page({
 
@@ -50,8 +51,7 @@ Page({
               })
             },
             fail: err => {
-              // handle error
-              console.log(err)
+              util.networkError(err)
             }
           })
           that.setData({
@@ -90,6 +90,7 @@ Page({
         that.setData({
           noticeText: '信息获取失败，请检查网络状态后重试。'
         })
+        util.networkError(err);
       }
     })
   },

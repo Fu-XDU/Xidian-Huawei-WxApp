@@ -1,6 +1,6 @@
 // pages/about/about.js
+const util = require("../../utils/util.js")
 Page({
-
   /**
    * 页面的初始数据
    * apply为网上申请，done为!1时不亮，数据库有三个可选参数即0、1和2
@@ -125,12 +125,8 @@ Page({
             break;
         }
       },
-      fail(res) {
-        wx.showToast({
-          icon: 'none',
-          title: '获取信息失败'
-        })
-        console.log("获取信息失败", res)
+      fail(err) {
+        util.networkError(err);
       }
     })
   },

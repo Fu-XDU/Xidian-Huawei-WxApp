@@ -1,4 +1,5 @@
 var app = getApp();
+const util = require("../../utils/util.js")
 //input.js
 Page({
   data: {
@@ -29,15 +30,9 @@ Page({
     return {}
   },
   onLoad: function() {
-    wx.cloud.callFunction({
-      name: "login",
-      data: {},
-      success(res) {
-        console.log("用户登录成功", res)
-        app.globalData.openid = res.result.openid
-      }
+    util.login().then((res)=>{
+      app.globalData.openid = res.result.openid
     })
-    //TODO:
   },
   onShow: function() {
     if (app.globalData.trial_version) {

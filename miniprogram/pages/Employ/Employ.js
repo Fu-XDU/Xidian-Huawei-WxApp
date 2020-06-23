@@ -1,30 +1,28 @@
-var app = getApp();
+const app = getApp();
+const util = require("../../utils/util.js")
+const db = wx.cloud.database()
 // miniprogram/pages/Employ/Employ.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    openid: '',
-    pageWidth: 0,
-    pickerWidth: 0,
-    name: "",
-    sex: "",
-    college: "",
-    major: "",
-    phone: "",
-    stuid: "",
-    direction: "",
+    name: null,
+    sex: null,
+    college: null,
+    major: null,
+    phone: null,
+    stuid: null,
+    direction: null,
     specialty: "",
-    detail_specialty: "",
+    detail_specialty: null,
     department: "",
     adjust: "是",
-    profile: "",
-    reward: "",
-    experience: "",
-    interest: "",
-    purpose: "",
+    profile: null,
+    reward: null,
+    experience: null,
+    interest: null,
+    purpose: null,
     detail_specialty_flag: false,
     disable_upload_photo: false,
     pickerList: {
@@ -35,34 +33,44 @@ Page({
       adjust: ["是", "否"]
     },
     showButton: true, //两个按钮，显示其一
-    noticeText: '', //最上方公告栏文本
+    noticeText: null, //最上方公告栏文本
     photo: '未选择，点击选择照片',
-    imgSrc: '',
-    imgType: ''
+    imgSrc: null,
+    imgType: null,
+    apply: null,
+    stuid_check: false,
+    //for test
+    hook_submit: false,
   },
   getImg: function() {
     var _this = this;
     if (_this.data.disable_upload_photo) return;
+    if (_this.data.apply != 1) {
+      wx.showToast({
+        icon: 'none',
+        title: '报名通道已经关闭'
+      })
+      return;
+    }
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        console.log(res.tempFilePaths)
         _this.setData({
           imgType: res.tempFilePaths[0].match(/\.[^.]+?$/)[0],
           imgSrc: res.tempFilePaths[0],
-          photo: '照片选择成功',
+          photo: '照片上传中......',
         })
         wx.cloud.uploadFile({
-          cloudPath: 'Photos/' + _this.data.openid + _this.data.imgSrc.match(/\.[^.]+?$/)[0],
+          cloudPath: 'Photos/' + app.globalData.openid + _this.data.imgSrc.match(/\.[^.]+?$/)[0],
           filePath: _this.data.imgSrc, // 文件路径
           success: res => {
             // get resource ID
             console.log('照片上传成功', res.fileID)
             _this.setData({
-              photo: '照片上传成功，重复上传可覆盖。'
+              photo: '照片上传成功，重复上传可覆盖'
             })
           },
           fail: err => {
@@ -179,153 +187,126 @@ Page({
     }
   },
   /**
-   * 表单提交函数--写入数据库
+   * 表单检查函数--检查表单规范性
    */
-  checkFormDouble: function() {
+  checkForm: function() {
+    var _this = this;
+    if (_this.data.apply != 1) {
+      wx.showToast({
+        icon: 'none',
+        title: '报名通道已经关闭'
+      })
+      return;
+    }
+    if (!_this.data.hook_submit) {
+      if (!_this.data.name || !_this.data.sex || !_this.data.college || !_this.data.major || !_this.data.phone || !_this.data.stuid || !_this.data.direction || !_this.data.specialty || !_this.data.department || !_this.data.adjust || !_this.data.profile || !_this.data.reward || !_this.data.experience || !_this.data.interest || !_this.data.purpose || (_this.data.detail_specialty_flag && !_this.data.detail_specialty)) {
+        wx.showToast({
+          icon: 'none',
+          title: '请填写所有项目'
+        })
+        return;
+      } else if (_this.data.stuid.length != 11 || _this.data.phone.length != 11) {
+        console.log("电话或学号错误")
+        if (stuid_check &&_this.data.stuid.length == 11 && _this.data.phone.length != 11) {
+          wx.showToast({
+            icon: 'none',
+            title: '请正确填写电话'
+          })
+        } else if (_this.data.stuid.length != 11 && _this.data.phone.length == 11) {
+          wx.showToast({
+            icon: 'none',
+            title: '请正确填写学号'
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请正确填写电话和学号'
+          })
+        }
+        return;
+      } else if (_this.data.stuid_check && _this.data.stuid.charAt(1) != '0') {
+        wx.showToast({
+          icon: 'none',
+          title: '本次只招收2020级本科新生'
+        })
+        return;
+      } else if (_this.data.photo != '照片上传成功，重复上传可覆盖') {
+        console.log("照片出现错误")
+        if (_this.data.photo == '未选择，点击选择照片') {
+          wx.showToast({
+            icon: 'none',
+            title: '请选择并上传照片'
+          })
+        } else if (_this.data.photo == '照片选择成功,正在上传...') {
+          wx.showToast({
+            icon: 'none',
+            title: '正在上传照片，请等待上传完成后提交'
+          })
+        }
+        return;
+      }
+    }
+    _this.submit();
+  },
+  /**
+   * 表单提交函数--将表单写入数据库
+   */
+  submit: function() {
     var _this = this;
     var real_specialty = ''
-    wx.cloud.callFunction({
-      name: "checkall",
-      data: {
-        collectionName: 'About'
-      },
-      success(res) {
-        if (res.result.data[0].apply == -1) {
-          wx.showToast({
-            icon: 'none',
-            title: '信息获取失败'
-          })
-        } else if (res.result.data[0].apply == 0) {
-          wx.showToast({
-            icon: 'none',
-            title: '报名尚未开始'
-          })
-          console.log('报名尚未开始')
-        } else if (res.result.data[0].apply == 2) {
-          wx.showToast({
-            icon: 'none',
-            title: '报名已经截止'
-          })
-          console.log('报名已经截止')
-        } else if (name == '' || sex == '' || college == '' || major == '' || phone == '' || stuid == '' || direction == '' || specialty == '' || department == '' || adjust == '' || profile == '' || reward == '' || experience == '' || interest == '' || purpose == '' || (detail_specialty_flag && detail_specialty == '')) {
-          wx.showToast({
-            icon: 'none',
-            title: '请填写所有项目'
-          })
-        } else if (stuid.length != 11 || phone.length != 11) {
-          if (stuid.length == 11 && phone.length != 11) {
-            wx.showToast({
-              icon: 'none',
-              title: '请正确填写电话'
-            })
-          } else if (stuid.length != 11 && phone.length == 11) {
-            wx.showToast({
-              icon: 'none',
-              title: '请正确填写学号'
-            })
-          } else if (stuid.length != 11 && phone.length != 11) {
-            wx.showToast({
-              icon: 'none',
-              title: '请正确填写电话和学号'
-            })
-          }
-        } else if (stuid.charAt(1) != '9') {
-          wx.showToast({
-            icon: 'none',
-            title: '本次只招收2019级本科新生'
-          })
-        } else if (photo != '照片上传成功，重复上传可覆盖。') {
-          if (photo == '未选择，点击选择照片') {
-            wx.showToast({
-              icon: 'none',
-              title: '请选择并上传照片'
-            })
-          } else if (photo == '照片选择成功,正在上传...') {
-            wx.showToast({
-              icon: 'none',
-              title: '正在上传照片，请等待上传完成后提交'
-            })
-          }
-        } else {
-          wx.showLoading({
-            title: '正在提交',
-          })
-          wx.cloud.callFunction({
-            name: "login",
-            data: {},
-            success(res) {
-              console.log("用户登录成功", res)
-              app.globalData.openid = res.result.openid
-              const db = wx.cloud.database()
-              db.collection('Recruit').where({
-                _openid: res.result.openid
-              }).get({
-                success: function(res) {
-                  if (res.data.length == 0) {
-                    real_specialty = detail_specialty_flag ? detail_specialty : specialty;
-                    db.collection('Recruit').add({
-                      data: {
-                        name: _this.data.name,
-                        sex: _this.data.sex,
-                        college: _this.data.college,
-                        major: _this.data.major,
-                        phone: _this.data.phone,
-                        stuid: _this.data.stuid,
-                        direction: _this.data.direction,
-                        specialty: real_specialty,
-                        department: _this.data.department,
-                        adjust: _this.data.adjust,
-                        profile: _this.data.profile,
-                        reward: _this.data.reward,
-                        experience: _this.data.experience,
-                        interest: _this.data.interest,
-                        purpose: _this.data.purpose,
-                        imgType: _this.data.imgType
-                      },
-                      success: res => {
-                        wx.redirectTo({
-                          url: '../Success/Success'
-                        })
-                        console.log('[数据库Recruit] [新增记录] 成功，记录 _id: ', res._id)
-                        console.log('报名成功，用户进入Msg界面')
-                      },
-                      fail: err => {
-                        wx.showToast({
-                          icon: 'none',
-                          title: '报名失败'
-                        })
-                        console.error('[数据库Recruit][新增记录] 失败：', err)
-                      }
-                    })
-                  } else {
-                    wx.showToast({
-                      icon: 'none',
-                      title: '请勿重复提交'
-                    })
-                  }
-                }
-              })
+    wx.showLoading({
+      title: '正在提交',
+    })
+    const dbname = 'Recruit'
+    db.collection(dbname).where({
+      _openid: app.globalData.openid
+    }).get({
+      success: function(res) {
+        if (res.data.length == 0) {
+          real_specialty = _this.data.detail_specialty_flag ? _this.data.detail_specialty : _this.data.specialty;
+          db.collection(dbname).add({
+            data: {
+              name: _this.data.name,
+              sex: _this.data.sex,
+              college: _this.data.college,
+              major: _this.data.major,
+              phone: _this.data.phone,
+              stuid: _this.data.stuid,
+              direction: _this.data.direction,
+              specialty: real_specialty,
+              department: _this.data.department,
+              adjust: _this.data.adjust,
+              profile: _this.data.profile,
+              reward: _this.data.reward,
+              experience: _this.data.experience,
+              interest: _this.data.interest,
+              purpose: _this.data.purpose,
+              imgType: _this.data.imgType
             },
-            fail(res) {
-              wx.showToast({
-                  icon: 'none',
-                  title: '登陆失败'
-                }),
-                console.log("用户登录失败", res)
+            success: res => {
+              wx.redirectTo({
+                url: '../Success/Success'
+              })
+              console.log('[数据库' + dbname + '] [新增记录] 成功，记录 _id: ', res._id)
+              console.log('报名成功，用户进入Msg界面')
+            },
+            fail: err => {
+              util.networkError(err);
             }
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请勿重复提交'
           })
         }
       },
-      fail(res) {
-        wx.showToast({
-          icon: 'none',
-          title: '获取信息失败'
-        })
-        console.log("获取信息失败", res)
+      fail: err => {
+        util.networkError(err);
       }
     })
   },
-  ToCheck: function() {
+  toCheck: function() {
     wx.navigateTo({
       url: '../Check/Check'
     })
@@ -335,49 +316,42 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let that = this
+    var _this = this
     wx.cloud.callFunction({
       name: "checkall",
       data: {
         collectionName: 'About'
       },
       success(res) {
-        that.setData({
-          noticeText: res.result.data[0].noticeTextAtEmploy
+        _this.setData({
+          noticeText: res.result.data[0].noticeTextAtEmploy,
+          apply: res.result.data[0].apply
         })
       },
       fail(res) {
-        that.setData({
+        _this.setData({
           noticeText: '信息获取失败，请检查网络状态后重试。'
         })
+        util.networkError(err)
       }
     })
-    wx.cloud.callFunction({
-      name: "login",
-      data: {},
-      success(res) {
-        console.log("用户登录成功", res)
-        app.globalData.openid = res.result.openid
-        that.setData({
-          openid: res.result.openid
-        })
-        const db = wx.cloud.database()
-        db.collection('Recruit').where({
-          _openid: res.result.openid
-        }).get({
-          success: function(res) {
-            if (res.data.length != 0) {
-              console.log("信息查询成功，找到报名信息", res.data[0])
-              that.setData({
-                showButton: false, //不显示提交按钮
-                photo: '已报名，照片已上传',
-                disable_upload_photo: true //禁止照片上传
-              })
-            } else {
-              console.log("信息查询成功,未找到报名信息")
-            }
-          }
-        })
+    db.collection('Recruit').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: function(res) {
+        if (res.data.length != 0) {
+          console.log("信息查询成功，找到报名信息", res.data[0])
+          _this.setData({
+            showButton: false, //不显示提交按钮
+            photo: '已报名，照片已上传',
+            disable_upload_photo: true //禁止照片上传
+          })
+        } else {
+          console.log("信息查询成功,未找到报名信息")
+        }
+      },
+      fail(err) {
+        util.networkError(err);
       }
     })
   },

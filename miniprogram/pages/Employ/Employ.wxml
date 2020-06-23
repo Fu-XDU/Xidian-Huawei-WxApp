@@ -181,6 +181,6 @@
   </label>
 </checkbox-group>
 <view class="weui-btn-area">
-  <button bindtap="checkFormDouble" class="weui-btn" type="primary" hidden='{{!showButton}}'>确认报名</button>
-  <button bindtap="ToCheck" class="weui-btn" type="primary" hidden='{{showButton}}'>查看我的报名</button>
+  <button bindtap="checkForm" class="weui-btn" type="primary" hidden='{{!showButton}}'>确认报名</button>
+  <button bindtap="toCheck" class="weui-btn" type="primary" hidden='{{showButton}}'>查看我的报名</button>
 </view>

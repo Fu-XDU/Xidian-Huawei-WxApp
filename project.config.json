@@ -24,11 +24,12 @@
 	},
 	"appid": "wxf125ed04e775152d",
 	"projectname": "Huawei",
-	"libVersion": "2.11.3",
+	"libVersion": "2.11.2",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"checkSiteMap": false,
 	"uglifyFileName": true,
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,

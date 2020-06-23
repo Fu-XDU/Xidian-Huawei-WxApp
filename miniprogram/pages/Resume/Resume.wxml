@@ -3,20 +3,13 @@
     <image src="../../images/icon.jpg"></image>
     <view class="page__title">【西电华为创新俱乐部】</view>
     <view class="page__desc resume-desc">
-      <text>是西安电子科技大学与华为技术有限公司
-</text>
-      <text>联合创办的全国首个校企联合培养社团
-</text>
-      <text>社团创建于2010年11月26日
-</text>
-      <text>以技术创新为核心
-</text>
-      <text>以打造最具幸福感俱乐部为使命
-</text>
-      <text>已成长为校园社团组织中的排头兵
-</text>
-      <text>欢迎大家加入，下面是详细的部门介绍
-</text>
+      <text>是西安电子科技大学与华为技术有限公司</text>
+      <text>联合创办的全国首个校企联合培养社团</text>
+      <text>社团创建于2010年11月26日</text>
+      <text>以技术创新为核心</text>
+      <text>以打造最具幸福感俱乐部为使命</text>
+      <text>已成长为校园社团组织中的排头兵</text>
+      <text>欢迎大家加入，下面是详细的部门介绍</text>
     </view>
   </view>
   <view class="page__bd page__bd_spacing">
