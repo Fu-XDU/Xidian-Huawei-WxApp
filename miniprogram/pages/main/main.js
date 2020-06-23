@@ -11,7 +11,7 @@ Page({
     console.log('用户点击进入华俱介绍界面')
   },
   developingOrDetail: function() {
-    if (!app.globalData.admin) {
+    if (!app.globalData.trial_version) {
       console.log('用户点击进入活动室预约界面')
       wx.showToast({
         title: "正在开发...",
@@ -40,23 +40,10 @@ Page({
     //TODO:
   },
   onShow: function() {
-    //在数据库admin表单中搜索此openid是否是超级管理员账户，是的话修改第三个图标的功能信息为查看报名
-    var that = this
-    const db = wx.cloud.database()
-    db.collection('admin').where({
-      _openid: app.globalData.openid
-    }).get({
-      success: function(res) {
-        if (res.data.length != 0) {
-          console.log("超级管理员用户")
-          app.globalData.admin = true;
-          that.setData({
-            third_icon_name: "查看报名"
-          })
-        } else {
-          console.log("普通用户")
-        }
-      }
-    })
+    if (app.globalData.trial_version) {
+      this.setData({
+        third_icon_name: "查看报名"
+      })
+    }
   }
 })

@@ -24,7 +24,8 @@ Page({
     purpose: "",
     openid: "",
     imgUrl: "",
-    imgtext: "照片正在下载中..."
+    imgtext: "照片正在下载中...",
+    noticeText:"",
   },
 
   /**
@@ -43,7 +44,6 @@ Page({
             fileID: 'cloud://huawei-213p7.6875-huawei-213p7-1300112055/Photos/' + app.globalData.openid + res.data[0].imgType,
             success: res => {
               // get temp file path
-              console.log(res.tempFilePath)
               that.setData({
                 imgUrl: res.tempFilePath,
                 imgtext: ""
@@ -74,6 +74,22 @@ Page({
         } else {
           console.log("信息查询成功,未找到报名信息")
         }
+      }
+    })
+    wx.cloud.callFunction({
+      name: "checkall",
+      data: {
+        collectionName: 'About'
+      },
+      success(res) {
+        that.setData({
+          noticeText: res.result.data[0].noticeTextAtCheck
+        })
+      },
+      fail(res) {
+        that.setData({
+          noticeText: '信息获取失败，请检查网络状态后重试。'
+        })
       }
     })
   },

@@ -6,13 +6,29 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"uglifyFileName": true,
+		"bundle": true
 	},
 	"appid": "wxf125ed04e775152d",
 	"projectname": "Huawei",
-	"libVersion": "2.2.5",
+	"libVersion": "2.11.3",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"checkSiteMap": false,
+	"uglifyFileName": true,
 	"condition": {
 		"search": {
 			"current": -1,

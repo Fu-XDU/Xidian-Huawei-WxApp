@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "报名状态查询",
   "navigationBarBackgroundColor": "#fff",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-notice-bar": "../../dist/notice-bar/index"
+  }
 }

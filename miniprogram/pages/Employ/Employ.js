@@ -35,14 +35,14 @@ Page({
       adjust: ["是", "否"]
     },
     showButton: true, //两个按钮，显示其一
-    noticeText: '正在获取数据...', //最上方公告栏文本
+    noticeText: '', //最上方公告栏文本
     photo: '未选择，点击选择照片',
     imgSrc: '',
     imgType: ''
   },
   getImg: function() {
-    var that = this;
-    if (that.data.disable_upload_photo) return;
+    var _this = this;
+    if (_this.data.disable_upload_photo) return;
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
@@ -50,25 +50,25 @@ Page({
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         console.log(res.tempFilePaths)
-        that.setData({
+        _this.setData({
           imgType: res.tempFilePaths[0].match(/\.[^.]+?$/)[0],
           imgSrc: res.tempFilePaths[0],
-          photo: '照片选择成功,正在上传...',
+          photo: '照片选择成功',
         })
         wx.cloud.uploadFile({
-          cloudPath: 'Photos/' + that.data.openid + res.tempFilePaths[0].match(/\.[^.]+?$/)[0],
-          filePath: res.tempFilePaths[0], // 文件路径
+          cloudPath: 'Photos/' + _this.data.openid + _this.data.imgSrc.match(/\.[^.]+?$/)[0],
+          filePath: _this.data.imgSrc, // 文件路径
           success: res => {
             // get resource ID
             console.log('照片上传成功', res.fileID)
-            that.setData({
+            _this.setData({
               photo: '照片上传成功，重复上传可覆盖。'
             })
           },
           fail: err => {
             // handle error
             console.log(res)
-            that.setData({
+            _this.setData({
               photo: '照片上传失败,点击重试'
             })
           }
@@ -182,26 +182,8 @@ Page({
    * 表单提交函数--写入数据库
    */
   checkFormDouble: function() {
-    var name = this.data.name,
-      sex = this.data.sex,
-      college = this.data.college,
-      major = this.data.major,
-      phone = this.data.phone,
-      stuid = this.data.stuid,
-      direction = this.data.direction,
-      specialty = this.data.specialty,
-      detail_specialty = this.data.detail_specialty,
-      real_specialty = '',
-      department = this.data.department,
-      adjust = this.data.adjust,
-      profile = this.data.profile,
-      reward = this.data.reward,
-      experience = this.data.experience,
-      interest = this.data.interest,
-      purpose = this.data.purpose,
-      detail_specialty_flag = this.data.detail_specialty_flag,
-      photo = this.data.photo,
-      imgType = this.data.imgType
+    var _this = this;
+    var name = real_specialty = ''
     wx.cloud.callFunction({
       name: "checkall",
       data: {
@@ -284,22 +266,22 @@ Page({
                     real_specialty = detail_specialty_flag ? detail_specialty : specialty;
                     db.collection('Recruit').add({
                       data: {
-                        name: name,
-                        sex: sex,
-                        college: college,
-                        major: major,
-                        phone: phone,
-                        stuid: stuid,
-                        direction: direction,
+                        name: _this.data.name,
+                        sex: _this.data.sex,
+                        college: _this.data.college,
+                        major: _this.data.major,
+                        phone: _this.data.phone,
+                        stuid: _this.data.stuid,
+                        direction: _this.data.direction,
                         specialty: real_specialty,
-                        department: department,
-                        adjust: adjust,
-                        profile: profile,
-                        reward: reward,
-                        experience: experience,
-                        interest: interest,
-                        purpose: purpose,
-                        imgType: imgType
+                        department: _this.data.department,
+                        adjust: _this.data.adjust,
+                        profile: _this.data.profile,
+                        reward: _this.data.reward,
+                        experience: _this.data.experience,
+                        interest: _this.data.interest,
+                        purpose: _this.data.purpose,
+                        imgType: _this.data.imgType
                       },
                       success: res => {
                         wx.redirectTo({
@@ -362,7 +344,7 @@ Page({
       },
       success(res) {
         that.setData({
-          noticeText: res.result.data[0].noticeText
+          noticeText: res.result.data[0].noticeTextAtEmploy
         })
       },
       fail(res) {
