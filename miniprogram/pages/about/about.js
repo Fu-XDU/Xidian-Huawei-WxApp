@@ -79,7 +79,6 @@ Page({
       },
       success(res) {
         var c = t.data.stages
-        console.log('网上申请:', res.result.data[0].apply, '综合面试:', res.result.data[0].interview, '部门审核:', res.result.data[0].check)
         switch (res.result.data[0].apply) {
           case '1':
             c[0].desc = "正在进行"
@@ -164,8 +163,5 @@ Page({
    */
   onShareAppMessage: function() {
 
-  },
-  getdetail: function() {
-    console.log(c[0].done)
   },
 })

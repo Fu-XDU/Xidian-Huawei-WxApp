@@ -18,13 +18,13 @@ Page({
     detail_specialty: null,
     department: "",
     adjust: "是",
-    profile: null,
-    reward: null,
-    experience: null,
-    interest: null,
-    purpose: null,
+    profile: "",
+    reward: "",
+    experience: "",
+    interest: "",
+    purpose: "",
     detail_specialty_flag: false,
-    disable_upload_photo: false,
+    disable_upload_photo: true,
     pickerList: {
       sex: ["男", "女"],
       college: ["通信工程学院", "电子工程学院", "计算机学院", "机电工程学院", "物理与光电工程学院", "经济与管理学院", "数学与统计学院", "外国语学院", "软件学院", "微电子学院", "生命科学技术学院", "空间科学与技术学院", "先进材料与纳米科技学院", "网络与信息安全学院", "人工智能学院"],
@@ -44,11 +44,10 @@ Page({
   },
   getImg: function() {
     var _this = this;
-    if (_this.data.disable_upload_photo) return;
-    if (_this.data.apply != 1) {
+    if (!_this.data.apply || _this.data.disable_upload_photo) {
       wx.showToast({
         icon: 'none',
-        title: '报名通道已经关闭'
+        title: !_this.data.apply ? _this.data.noticeText : '报名通道已经关闭'
       })
       return;
     }
@@ -68,14 +67,14 @@ Page({
           filePath: _this.data.imgSrc, // 文件路径
           success: res => {
             // get resource ID
-            console.log('照片上传成功', res.fileID)
+            //console.log('照片上传成功', res.fileID)
             _this.setData({
               photo: '照片上传成功，重复上传可覆盖'
             })
           },
           fail: err => {
             // handle error
-            console.log(res)
+            //console.log(res)
             _this.setData({
               photo: '照片上传失败,点击重试'
             })
@@ -206,8 +205,8 @@ Page({
         })
         return;
       } else if (_this.data.stuid.length != 11 || _this.data.phone.length != 11) {
-        console.log("电话或学号错误")
-        if (stuid_check &&_this.data.stuid.length == 11 && _this.data.phone.length != 11) {
+        //console.log("电话或学号错误")
+        if (stuid_check && _this.data.stuid.length == 11 && _this.data.phone.length != 11) {
           wx.showToast({
             icon: 'none',
             title: '请正确填写电话'
@@ -231,7 +230,7 @@ Page({
         })
         return;
       } else if (_this.data.photo != '照片上传成功，重复上传可覆盖') {
-        console.log("照片出现错误")
+        //console.log("照片出现错误")
         if (_this.data.photo == '未选择，点击选择照片') {
           wx.showToast({
             icon: 'none',
@@ -287,8 +286,8 @@ Page({
               wx.redirectTo({
                 url: '../Success/Success'
               })
-              console.log('[数据库' + dbname + '] [新增记录] 成功，记录 _id: ', res._id)
-              console.log('报名成功，用户进入Msg界面')
+              //console.log('[数据库' + dbname + '] [新增记录] 成功，记录 _id: ', res._id)
+              //console.log('报名成功，用户进入Msg界面')
             },
             fail: err => {
               util.networkError(err);
@@ -310,7 +309,7 @@ Page({
     wx.navigateTo({
       url: '../Check/Check'
     })
-    console.log('用户进入搜索界面')
+    //console.log('用户进入搜索界面')
   },
   /**
    * 生命周期函数--监听页面加载
@@ -324,9 +323,10 @@ Page({
       },
       success(res) {
         _this.setData({
-          noticeText: res.result.data[0].noticeTextAtEmploy,
+          noticeText: res.result.data[0].apply == 0 ? res.result.data[0].noticeTextAtEmployWhenApplyIs0 : res.result.data[0].apply == 1 ? res.result.data[0].noticeTextAtEmployWhenApplyIs1 : res.result.data[0].noticeTextAtEmployWhenApplyIs2,
           apply: res.result.data[0].apply
         })
+        if (res.result.data[0].apply == 1) _this.data.disable_upload_photo = false
       },
       fail(res) {
         _this.setData({
@@ -340,14 +340,14 @@ Page({
     }).get({
       success: function(res) {
         if (res.data.length != 0) {
-          console.log("信息查询成功，找到报名信息", res.data[0])
+          //console.log("信息查询成功，找到报名信息", res.data[0])
           _this.setData({
             showButton: false, //不显示提交按钮
             photo: '已报名，照片已上传',
             disable_upload_photo: true //禁止照片上传
           })
         } else {
-          console.log("信息查询成功,未找到报名信息")
+          //console.log("信息查询成功,未找到报名信息")
         }
       },
       fail(err) {

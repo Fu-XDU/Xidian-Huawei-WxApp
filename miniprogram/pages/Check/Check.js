@@ -40,7 +40,6 @@ Page({
     }).get({
       success: function(res) {
         if (res.data.length != 0) {
-          console.log("信息查询成功，找到报名信息", res.data[0])
           wx.cloud.downloadFile({
             fileID: 'cloud://huawei-213p7.6875-huawei-213p7-1300112055/Photos/' + app.globalData.openid + res.data[0].imgType,
             success: res => {
@@ -72,7 +71,7 @@ Page({
             purpose: res.data[0].purpose
           })
         } else {
-          console.log("信息查询成功,未找到报名信息")
+          //console.log("信息查询成功,未找到报名信息")
         }
       }
     })

@@ -45,10 +45,9 @@ Page({
         collectionName: 'Recruit'
       },
       success: res => {
-        console.log("[数据库Recruit]信息获取成功");
         try {
-          if (!res.result.data)
-            console.log("获取成功");
+          //if (!res.result.data)
+            //console.log("获取成功");
           this.setData({
             resultList: [],
             list: res.result.data

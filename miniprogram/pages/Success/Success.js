@@ -3,6 +3,6 @@ Page({
     wx.switchTab({
       url: '../main/main'
     })
-    console.log('用户返回主页')
+    //console.log('用户返回主页')
   },
 });

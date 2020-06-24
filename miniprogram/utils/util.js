@@ -12,7 +12,7 @@ const login = function () {
       name: "login",
       data: {},
       success(res) {
-        console.log("用户登录成功")
+        //console.log("用户登录成功")
         resolve(res)
       },
       fail(err) {
