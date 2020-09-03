@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "填写报名表",
   "navigationBarBackgroundColor": "#fff",
-  "usingComponents": {"van-notice-bar": "../../dist/notice-bar/index"}
+  "usingComponents": {"van-notice-bar": "../../dist/notice-bar/index"},
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
 }

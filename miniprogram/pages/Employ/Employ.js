@@ -32,8 +32,8 @@ Page({
       department: ["技术部", "秘书部", "花粉部"],
       adjust: ["是", "否"]
     },
-    showButton: true, //两个按钮，显示其一
-    noticeText: null, //最上方公告栏文本
+    showButton: false, //两个按钮，显示其一
+    noticeText: '正在获取数据...', //最上方公告栏文本
     photo: '未选择，点击选择照片',
     imgSrc: null,
     imgType: null,
@@ -315,44 +315,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var _this = this
-    wx.cloud.callFunction({
-      name: "checkall",
-      data: {
-        collectionName: 'About'
-      },
-      success(res) {
-        _this.setData({
-          noticeText: res.result.data[0].apply == 0 ? res.result.data[0].noticeTextAtEmployWhenApplyIs0 : res.result.data[0].apply == 1 ? res.result.data[0].noticeTextAtEmployWhenApplyIs1 : res.result.data[0].noticeTextAtEmployWhenApplyIs2,
-          apply: res.result.data[0].apply
-        })
-        if (res.result.data[0].apply == 1) _this.data.disable_upload_photo = false
-      },
-      fail(res) {
-        _this.setData({
-          noticeText: '信息获取失败，请检查网络状态后重试。'
-        })
-        util.networkError(err)
-      }
-    })
-    db.collection('Recruit').where({
-      _openid: app.globalData.openid
-    }).get({
-      success: function(res) {
-        if (res.data.length != 0) {
-          //console.log("信息查询成功，找到报名信息", res.data[0])
-          _this.setData({
-            showButton: false, //不显示提交按钮
-            photo: '已报名，照片已上传',
-            disable_upload_photo: true //禁止照片上传
-          })
-        } else {
-          //console.log("信息查询成功,未找到报名信息")
-        }
-      },
-      fail(err) {
-        util.networkError(err);
-      }
+    this.setData({
+      disable_upload_photo: app.globalData.apply != 1 || app.globalData.registered,
+      showButton: !app.globalData.registered, //两个按钮，显示其一
+      noticeText: app.globalData.apply == 0 ? app.globalData.noticeTextAtEmployWhenApplyIs0 : app.globalData.apply == 1 ? app.globalData.noticeTextAtEmployWhenApplyIs1 : app.globalData.noticeTextAtEmployWhenApplyIs2, //最上方公告栏文本
+      photo: app.globalData.registered ? '已报名，照片已上传' : '未选择，点击选择照片',
+      apply: app.globalData.apply,
     })
   },
 
@@ -373,22 +341,23 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
-
-  },
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    // 离开时询问是否存为草稿
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    util.init().then((res) => {
+      this.onLoad()
+      wx.stopPullDownRefresh()
+    })
   },
 
   /**

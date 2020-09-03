@@ -21,6 +21,5 @@
 </view>
 <view class="section" hidden='true'>
   <view class="flex-wrp" style="flex-direction:row;">
-    
   </view>
 </view>

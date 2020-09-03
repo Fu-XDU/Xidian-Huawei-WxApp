@@ -30,9 +30,7 @@ Page({
     return {}
   },
   onLoad: function() {
-    util.login().then((res)=>{
-      app.globalData.openid = res.result.openid
-    })
+    
   },
   onShow: function() {
     if (app.globalData.trial_version) {
